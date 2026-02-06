@@ -1,7 +1,5 @@
 package project20280.exercises;
 
-import java.util.Arrays;
-
 public class Wk1 {
 
     public static void q1() {

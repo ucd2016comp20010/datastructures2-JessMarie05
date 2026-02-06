@@ -215,7 +215,6 @@ public class SinglyLinkedList<E> implements List<E> {
         ll.addLast(-1);
         //ll.removeLast();
         //ll.removeFirst();
-        //System.out.println("I accept your apology");
         //ll.add(3, 2);
         System.out.println(ll);
         ll.remove(5);

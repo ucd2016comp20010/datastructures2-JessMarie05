@@ -9,7 +9,7 @@ public class DoublyLinkedList<E> implements List<E> {
     private static class Node<E> {
         private final E data;
         private Node<E> next;
-        private final Node<E> prev;
+        private  Node<E> prev;
 
         public Node(E e, Node<E> p, Node<E> n) {
             data = e;
@@ -33,7 +33,7 @@ public class DoublyLinkedList<E> implements List<E> {
 
     private final Node<E> head;
     private final Node<E> tail;
-    private final int size = 0;
+    private int size = 0;
 
     public DoublyLinkedList() {
         head = new Node<E>(null, null, null);
@@ -42,36 +42,50 @@ public class DoublyLinkedList<E> implements List<E> {
     }
 
     private void addBetween(E e, Node<E> pred, Node<E> succ) {
-        // TODO
+        Node <E> newest = new Node<E>(e, pred, succ);
+        pred.next = newest;
+        succ.prev = newest;
+        size++;
+
     }
 
     @Override
     public int size() {
-        // TODO
-        return 0;
+        return size;
     }
 
     @Override
     public boolean isEmpty() {
-        // TODO
-        return false;
+        return size ==0;
     }
 
     @Override
     public E get(int i) {
-        // TODO
-        return null;
+        if (i < 0 || i >= size) return null;
+
+        Node<E> curr= head.next;
+        for(int j=0;j<i;j++){
+            curr = curr.next;
+        }
+        return curr.getData();
     }
 
     @Override
     public void add(int i, E e) {
-        // TODO
+        Node <E> succ = head.next;
+        for(int j=0;j<i;j++){
+            succ = succ.next;
+        }
+        addBetween(e, succ.prev, succ);
     }
 
     @Override
     public E remove(int i) {
-        // TODO
-        return null;
+        Node <E> curr = head.next;
+        for(int j=0;j<i;j++){
+            curr = curr.next;
+        }
+        return remove (curr);
     }
 
     private class DoublyLinkedListIterator<E> implements Iterator<E> {
@@ -96,8 +110,12 @@ public class DoublyLinkedList<E> implements List<E> {
     }
 
     private E remove(Node<E> n) {
-        // TODO
-        return null;
+        Node<E> pred = n.prev;
+        Node<E> succ = n.next;
+        pred.next = succ;
+        succ.prev = pred;
+        size--;
+        return n.data;
     }
 
     public E first() {
@@ -108,30 +126,32 @@ public class DoublyLinkedList<E> implements List<E> {
     }
 
     public E last() {
-        // TODO
-        return null;
+        if (isEmpty()) {
+            return null;
+        }
+        return tail.prev.getData();
     }
 
     @Override
     public E removeFirst() {
-        // TODO
-        return null;
+        if (isEmpty()) return null;
+        return remove(head.next);
     }
 
     @Override
     public E removeLast() {
-        // TODO
-        return null;
+        if (isEmpty()) return null;
+        return remove(tail.prev);
     }
 
     @Override
     public void addLast(E e) {
-        // TODO
+        addBetween (e,tail.prev, tail);
     }
 
     @Override
     public void addFirst(E e) {
-        // TODO
+        addBetween(e,head, head.next);
     }
 
     public String toString() {
@@ -150,7 +170,7 @@ public class DoublyLinkedList<E> implements List<E> {
 
     public static void main(String[] args) {
         DoublyLinkedList<Integer> ll = new DoublyLinkedList<Integer>();
-        ll.addFirst(0);
+        /*ll.addFirst(0);
         ll.addFirst(1);
         ll.addFirst(2);
         ll.addLast(-1);
@@ -165,5 +185,23 @@ public class DoublyLinkedList<E> implements List<E> {
         for (Integer e : ll) {
             System.out.println("value: " + e);
         }
+
+         */
+
+        System.out.println("ll " + ll + " isEmpty: " + ll.isEmpty());
+        //LinkedList<Integer> ll = new LinkedList<Integer>();
+
+        ll.addFirst(0);
+        ll.addFirst(1);
+        ll.addFirst(2);
+        ll.addFirst(3);
+        ll.addFirst(4);
+        ll.addLast(-1);
+        //ll.removeLast();
+        //ll.removeFirst();
+        //ll.add(3, 2);
+        System.out.println(ll);
+        ll.remove(5);
+        System.out.println(ll);
     }
 }
